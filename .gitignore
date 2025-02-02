@@ -1,0 +1,45 @@
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+msbuild.log
+msbuild.err
+msbuild.wrn
+
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Rider
+.idea/
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Vagrant
+.vagrant/
+
+# F# specific
+*.fsproj.user
+/tests/secure1.TestRunner.Tests/logs
+*.log
+/tests/secure1.TestRunner.Tests/publish
+/tests/secure1.TestRunner.Tests/TestResults
+/tests/secure1.Tests/TestResults
+/vagrant-tests
+/src/secure1.TestRunner/vagrant-tests

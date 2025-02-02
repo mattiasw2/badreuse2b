@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "badreuse2", "badreuse2.fsproj", "{A00E0EFF-CFA6-4D76-9B6D-18E0623DAE6B}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "badreuse2.tests", "..\..\tests\badreuse2.tests\badreuse2.tests.fsproj", "{08ACE902-590C-4223-8C52-811C2B5F57FE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A00E0EFF-CFA6-4D76-9B6D-18E0623DAE6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A00E0EFF-CFA6-4D76-9B6D-18E0623DAE6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A00E0EFF-CFA6-4D76-9B6D-18E0623DAE6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A00E0EFF-CFA6-4D76-9B6D-18E0623DAE6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08ACE902-590C-4223-8C52-811C2B5F57FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08ACE902-590C-4223-8C52-811C2B5F57FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08ACE902-590C-4223-8C52-811C2B5F57FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08ACE902-590C-4223-8C52-811C2B5F57FE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
