@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.12.35527.113 d17.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "badreuse2", "badreuse2.fsproj", "{A00E0EFF-CFA6-4D76-9B6D-18E0623DAE6B}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "badreuse2", "src\badreuse2\badreuse2.fsproj", "{A00E0EFF-CFA6-4D76-9B6D-18E0623DAE6B}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "badreuse2.tests", "..\..\tests\badreuse2.tests\badreuse2.tests.fsproj", "{08ACE902-590C-4223-8C52-811C2B5F57FE}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "badreuse2.tests", "tests\badreuse2.tests\badreuse2.tests.fsproj", "{08ACE902-590C-4223-8C52-811C2B5F57FE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
