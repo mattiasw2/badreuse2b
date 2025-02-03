@@ -24,13 +24,11 @@ let reservedKeywordsOfFsharp = Set.ofList [
 // Split the code line into tokens, get rid of short ones, generic ones like reserved keywords and short variable names
 let tokensOfCodeLine (token: string) : string array =
     token
-    |> fun t -> t.ToLowerInvariant()                          // Lowercase
-    |> fun t -> Regex.Replace(t, "[^a-z0-9]", " ")              // Remove punctuation (keeping alphanumerics)
-    |> fun t -> t.Split([|' '|], System.StringSplitOptions.RemoveEmptyEntries)
+    |> fun t -> Regex.Split(t, "(?<!^)(?=[A-Z])")  // Split camelCase first
     |> Array.collect (fun part -> 
-           // Optionally, split camelCase or snake_case parts further.
-           // This is a simplified regex for splitting camelCase:
-           Regex.Split(part, "(?<!^)(?=[A-Z])")
+           part.ToLowerInvariant()
+           |> fun t -> Regex.Replace(t, "[^a-z0-9]", " ")
+           |> fun t -> t.Split([|' '|], System.StringSplitOptions.RemoveEmptyEntries)
        )
     |> Array.map (fun part -> Regex.Replace(part, @"\d+$", ""))  // Remove trailing digits
     |> Array.filter (fun part -> part.Length > 5 && not (Set.contains part reservedKeywordsOfFsharp))

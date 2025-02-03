@@ -40,13 +40,40 @@ let ``Tokenize sample code correctly`` () =
 }"""
 
     let actualTokens = tokensOfCode sampleCode
-    // printfn "Actual tokens: %A" actualTokens
+    printfn "Actual tokens: %A" actualTokens
     let expectedTokens = [|
-      "checking"; "console"; "content"; "ensure"; "failed"; "httpclient";
-      "indexname"; "issuccessstatuscode"; "operations"; "pending"; "postasync";
-      "readasstringasync"; "refresh"; "response"; "responsecontent"; "seconds";
-      "statuscode"; "string"; "visible"; "waitforpendingoperationsasync";
-      "writeline"
+      "checking"; "client"; "console"; "content"; "ensure"; "failed"; "operations";
+      "pending"; "refresh"; "response"; "seconds"; "status"; "string"; "success";
+      "visible"
+    |]
+
+    Assert.Equal<string array>(expectedTokens, actualTokens)
+
+[<Fact>]
+let ``Split camelCase correctly`` () =
+    let camelCaseCode = """
+    let myVariableName = 1
+    let anotherExample = 2
+    override anotherExample = 2
+    """
+
+    let actualTokens = tokensOfCode camelCaseCode
+    let expectedTokens = [|
+        "another"; "example"; "variable"
+    |]
+
+    Assert.Equal<string array>(expectedTokens, actualTokens)
+
+[<Fact>]
+let ``Split multiword with _ correctly`` () =
+    let camelCaseCode = """
+    let my_Variable_Name = 1
+    let another_Example = 2
+    """
+
+    let actualTokens = tokensOfCode camelCaseCode
+    let expectedTokens = [|
+        "another"; "example"; "variable"
     |]
 
     Assert.Equal<string array>(expectedTokens, actualTokens)
