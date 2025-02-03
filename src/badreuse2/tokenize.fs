@@ -21,6 +21,7 @@ let reservedKeywordsOfFsharp = Set.ofList [
     "trait"; "virtual"; "volatile"
 ]
 
+// Split the code line into tokens, get rid of short ones, generic ones like reserved keywords and short variable names
 let tokensOfCodeLine (token: string) : string array =
     token
     |> fun t -> t.ToLowerInvariant()                          // Lowercase
@@ -39,7 +40,7 @@ let tokensOfCodeLine (token: string) : string array =
            part
        )
 
-// Example usage:
+// Split the code into tokens, get rid of short ones, generic ones like reserved keywords and short variable names
 let tokensOfCode (code: string) : string array =
     // Split code into tokens based on whitespace and common delimiters,
     // then normalize each token.
