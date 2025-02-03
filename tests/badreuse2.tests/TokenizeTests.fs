@@ -40,11 +40,12 @@ let ``Tokenize sample code correctly`` () =
 }"""
 
     let actualTokens = tokensOfCode sampleCode
-    printfn "Actual tokens: %A" actualTokens
+    // printfn "Actual tokens: %A" actualTokens
+    
+   
     let expectedTokens = [|
-      "checking"; "client"; "console"; "content"; "ensure"; "failed"; "operations";
-      "pending"; "refresh"; "response"; "seconds"; "status"; "string"; "success";
-      "visible"
+      "/{indexName}/_refresh"; "checking"; "client"; "console"; "content"; "failed";
+      "operations"; "pending"; "refresh"; "response"; "status"; "string"; "success"
     |]
 
     Assert.Equal<string array>(expectedTokens, actualTokens)
@@ -77,3 +78,17 @@ let ``Split multiword with _ correctly`` () =
     |]
 
     Assert.Equal<string array>(expectedTokens, actualTokens)
+
+[<Fact>]
+let ``keep strings and ignore comments`` () =
+    let camelCaseCode = """
+    let my_Variable_Name = "thisisastring"
+    let another_Example = 2 // nocommentsallowedinresult
+    """
+
+    let actualTokens = tokensOfCode camelCaseCode
+    let expectedTokens = [|
+        "another"; "example"; "thisisastring"; "variable"
+    |]
+
+    Assert.Equal<string array>(expectedTokens, actualTokens)    

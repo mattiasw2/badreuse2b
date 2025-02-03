@@ -23,26 +23,43 @@ let reservedKeywordsOfFsharp = Set.ofList [
 
 // Split the code line into tokens, get rid of short ones, generic ones like reserved keywords and short variable names
 let tokensOfCodeLine (token: string) : string array =
-    token
-    |> fun t -> Regex.Split(t, "(?<!^)(?=[A-Z])")  // Split camelCase first
-    |> Array.collect (fun part -> 
-           part.ToLowerInvariant()
-           |> fun t -> Regex.Replace(t, "[^a-z0-9]", " ")
-           |> fun t -> t.Split([|' '|], System.StringSplitOptions.RemoveEmptyEntries)
-       )
+    // Extract string literals and preserve them
+    let stringLiterals = Regex.Matches(token, "\"[^\"]*\"")
+    let nonStringParts = Regex.Split(token, "\"[^\"]*\"")
+
+    // Process non-string parts
+    let processedTokens = 
+        nonStringParts
+        |> Array.collect (fun part ->
+            part
+            |> fun t -> Regex.Split(t, "(?<!^)(?=[A-Z])")  // Split camelCase
+            |> Array.collect (fun part ->
+                part.ToLowerInvariant()
+                |> fun t -> Regex.Replace(t, "[^a-z0-9]", " ")  // Remove special chars including URL paths
+                |> fun t -> t.Split([|' '|], System.StringSplitOptions.RemoveEmptyEntries)
+                |> Array.filter (fun t -> not (t.StartsWith("/")))  // Filter out URL paths
+            )
+        )
+
+    // Combine string literals and processed tokens
+    let stringTokens = 
+        stringLiterals
+        |> Seq.map (fun m -> m.Value.Trim('"'))
+        |> Seq.filter (fun s -> s.Length > 5)  // Only filter by length for string literals
+        |> Seq.toArray
+
+    Array.append processedTokens stringTokens
     |> Array.map (fun part -> Regex.Replace(part, @"\d+$", ""))  // Remove trailing digits
     |> Array.filter (fun part -> part.Length > 5 && not (Set.contains part reservedKeywordsOfFsharp))
-    |> Array.map (fun part -> 
-           // Optionally apply a stemmer here.
-           // For example, use a Porter stemmer library if available.
-           part
-       )
 
 // Split the code into tokens, get rid of short ones, generic ones like reserved keywords and short variable names
 let tokensOfCode (code: string) : string array =
+    // First remove all comments (both line and inline)
+    let cleanedCode = Regex.Replace(code, @"//.*?$|//.*?(?=\n)|/\*.*?\*/", "", RegexOptions.Multiline ||| RegexOptions.Singleline)
+    
     // Split code into tokens based on whitespace and common delimiters,
     // then normalize each token.
-    code.Split([|' '; '\n'; '\r'; '\t'|], System.StringSplitOptions.RemoveEmptyEntries)
+    cleanedCode.Split([|' '; '\n'; '\r'; '\t'|], System.StringSplitOptions.RemoveEmptyEntries)
     |> Array.collect tokensOfCodeLine
     |> Array.sort
     |> Array.distinct
