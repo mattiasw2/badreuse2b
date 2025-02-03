@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Compile Include="Tests.fs" />
+    <Compile Include="TokenizeTests.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 
