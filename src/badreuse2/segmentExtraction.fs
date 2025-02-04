@@ -72,7 +72,11 @@ let extractSegments (filePath: string) (fileContent: string) : SegmentInfo list 
         | (lineNum, line) :: rest ->
             collectSegments acc (line :: currentSegment) startLine rest
 
-    collectSegments [] [] 1 (Array.toList lines)
+    let segments = 
+        collectSegments [] [] 1 (Array.toList lines)
+        |> List.filter (fun s -> not (String.IsNullOrWhiteSpace s.SegmentText))
+
+    segments
 
 // Removed SegmentInfo definition - now in separate file
 
