@@ -75,91 +75,106 @@ Solution/
 
 # Module Organization
 
-The program should be based on small modules.
+- The program should be based on small modules.
 
-Each modules should have a good description of the external api, both usable AI and users.
+- Each modules should have a good description of the external api, both usable AI and users.
 
-When developing, the program will be built bottom up on modules. 
+- When developing, the program will be built bottom up on modules. 
 
-The goals is that when developing a new module, we only need to look at the existing modules external api.
+- The goals is that when developing a new module, we only need to look at the existing modules external api.
 
 # Programming language
 
-Fsharp
+- Fsharp
 
-Libraries. Use fsharp's immutable libraries if possible. 
+- Libraries. Use fsharp's immutable data structures if possible. 
 
-Otherwise, use dotnet or aspnet, or propose common libraries from nuget.
+- Otherwise, use dotnet or aspnet, or propose common libraries from nuget.
 
-Create type-safe wrappers around projects
+- Create type-safe wrappers around projects, sometimes in C#.
 
 # Testing Structure
 
-Test files should follow the pattern: ModuleName[Function]Tests.fs
-Each test file should focus on a specific function or closely related group of functions
-Property-based tests (FsCheck) and unit tests should be in separate files but same directory
-Use xUnits Theory if possible
+- Test files should follow the pattern: ModuleName[Function]Tests.fs
+
+- Each test file should focus on a specific function or closely related group of functions
+
+- Property-based tests (FsCheck) and unit tests should be in separate files but same directory
+
+- Use xUnits Theory if possible
 
 # Code Style
 
-Minimize mutable state: I want as few states and refs and mutable as possible, and typically only used for performance like accumulators.
+- Minimize mutable state: I want as few states and refs and mutable as possible, and typically only used for performance like accumulators.
 
-Consider using immutable data structures (lists, sequences) by default. If lists are long, do not use lists, instead specialized structures like Dictionarys, Sets etc.
-StringBuilder ok inside a function.
+- Consider using immutable data structures (lists, sequences) by default. If lists are long, do not use lists, instead specialized structures like Dictionarys, Sets etc.
 
-Use pure functions where possible, but some side effects are unavoidable, and as long as functions are testable, that is fine. 
-Examples of unvoidable side effects: logging, file I/O, process management.
+- StringBuilder ok inside a function.
 
-Leverage F#'s type system for safety. Type both input arguments and result should be explicitely stated.
+- Use pure functions where possible, but some side effects are unavoidable, and as long as functions are testable, that is fine. 
+- Examples of unvoidable side effects: logging, file I/O, process management.
 
-Strings are always non-null, unless explicitely stated otherwise.
+- Leverage F#'s type system for safety. Type both input arguments and result should be explicitely stated.
 
-Use pattern matching over if/else when appropriate
+- Strings are always non-null, unless explicitely stated otherwise.
 
-Document public functions with single sentence description. 
-Name functions, types, arguments so that they are self-explanatory.
-If argument or result is not obvious, document it.
+- Use pattern matching over if/else when appropriate
 
-We love union types, and rarely use booleans, instead we create a union type for each possible state.
+- Document public functions with single sentence description. 
 
-We list all union types in a match, and seldom used the otherwise pattern "_ -> ..."
+- Name functions, types, arguments so that they are self-explanatory.
 
-If you get if you get incomplete pattern matching on union types error, it means that you are using match on a union type, and you have ignored some variants. If you know that variant should never happen, you can just add it with failwith "..:", otherwise, handle the case.
+- If argument or result is not obvious, document it.
 
-1 file == 1 module. Do not use "module XXXX =" syntax since creates extra indentation. Exception is “companion module” for a type for parsing, formatting, validation.
+- We love union types, and rarely use booleans, instead we create a union type for each possible state.
 
-Avoid using OO ideas, like "member _.", especially in tests.
+- We list all union types in a match, and seldom used the otherwise pattern "_ -> ..."
 
-One liner functions are fine, but if bigger, put them on toplevel so we can test them.
+- If you get if you get incomplete pattern matching on union types error, it means that you are using match on a union type, and you have ignored some variants. If you know that variant should never happen, you can just add it with failwith "..:", otherwise, handle the case.
 
-Let all functions be public, so that easy to test. So no private or public markers in the code.
+- 1 file == 1 module. Do not use "module XXXX =" syntax since creates extra indentation. Exception is “companion module” for a type for parsing, formatting, validation.
 
-Avoid unnecessary indentation, like using "module XXX ="
+- Avoid using OO ideas, like "member _.", especially in tests.
 
-We do not repeat code, create a utility function and call it, or use a new module.
+- One liner functions are fine, but if bigger, put them on toplevel so we can test them.
 
-Before creating a new type, search for it, and reuse. If not found, create a new type. Reuseable types are placed in files with "Types" as part of the name.
+- Let all functions be public, so that easy to test. So no private or public markers in the code.
 
-Do not use the "let rec Func = function | [] -> ...:", instead use "let rec Func l = match l with | [] -> ..."
+- Avoid unnecessary indentation, like using "module XXX ="
+
+- We do not repeat code, create a utility function and call it, or use a new module.
+
+- Before creating a new type, search for it, and reuse. If not found, create a new type. Reuseable types are placed in files with "Types" as part of the name.
+
+- Do not use the "let rec Func = function | [] -> ...:", instead use "let rec Func l = match l with | [] -> ..."
 
 
 # F# file organization:
 
-The order in the .fsproj file is the order in which the files are compiled. We cannot have circular dependencies. If extracting to new base module doesn't work, abort and explain the problem.
-Try to keep all files under 200 lines; split it based on functionality
-Each module should focus on a specific domain concept
-Only one file per module, unless very small and only used in once place
-Files must start with the module declaration, followed by open statements
-Use module instead of namespace + module to minimize indentation
-The module name should match the full namespace path (e.g., module secure1.TestRunner.Tests.VagrantManagerTests)
-Keep all code at the root level (no extra indentation)
-Open statements should be grouped together right after the module declaration
-Type definitions and functions should be defined at the root level after all open statements
+- The order in the .fsproj file is the order in which the files are compiled. We cannot have circular dependencies. If extracting to new base module doesn't work, abort and explain the problem.
+
+- Try to keep all files under 200 lines; split it based on functionality
+
+- Each module should focus on a specific domain concept
+
+- Only one file per module, unless very small and only used in once place
+
+- Files must start with the module declaration, followed by open statements
+
+- Use module instead of namespace + module to minimize indentation. E.g. "module Badreuse2.SegmentExtraction" first in file
+
+- The module name should match the full namespace path (e.g., module secure1.TestRunner.Tests.VagrantManagerTests)
+
+- Keep all code at the root level (no extra indentation), seldom define functions inside functions unless due to closures
+
+- Open statements should be grouped together right after the module declaration
+
+- Type definitions and functions should be defined at the root level after all open statements
 
 # F# quirks
 
-If you think you need to add "public", remember everything is public in F#. The problem is something different, like circular dependencies.
+- If you think you need to add "public", remember everything is public in F#. The problem is something different, like circular dependencies.
 
-Make sure the order in the .fsproj file follows the dependency/compilation order.
+- Make sure the order in the .fsproj file follows the dependency/compilation order.
 
-Always build the whole solution before running tests.
+- Always build the whole solution before running tests.
