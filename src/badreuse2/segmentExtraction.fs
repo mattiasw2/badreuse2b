@@ -5,19 +5,8 @@ open System.Text.RegularExpressions
 
 /// Replaces multi-line strings (enclosed in """) with empty strings ("").
 let removeMultilineStrings (content: string) : string =
-    let normalized = content.Replace("\r\n", "\n")
-    let rec replaceNext (text: string) (startIndex: int) =
-        let start = text.IndexOf("\"\"\"", startIndex)
-        if start < 0 then text
-        else
-            let endIndex = text.IndexOf("\"\"\"", start + 3)
-            if endIndex < 0 then text
-            else
-                let before = text.Substring(0, start)
-                let after = text.Substring(endIndex + 3)
-                replaceNext (before + "\"\"" + after) 0
-
-    replaceNext normalized 0
+    let pattern = "\"{3}([^\"]|\"{1,2})*?\"{3}"
+    Regex.Replace(content, pattern, "\"\"", RegexOptions.Singleline)
 
 /// Removes multi-line comments (enclosed in (* and *)).
 let removeMultilineComments (content: string) : string =
