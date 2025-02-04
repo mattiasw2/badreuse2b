@@ -1,7 +1,7 @@
 module SegmentExtractionRemoveMultilineStringsTests
 
 open Xunit
-open SegmentExtraction
+open badreuse2.SegmentExtraction
 
 [<Fact>]
 let ``Remove simple multi-line string`` () =

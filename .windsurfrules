@@ -140,6 +140,8 @@ We do not repeat code, create a utility function and call it, or use a new modul
 
 Before creating a new type, search for it, and reuse. If not found, create a new type. Reuseable types are placed in files with "Types" as part of the name.
 
+Do not use the "let rec Func = function | [] -> ...:", instead use "let rec Func l = match l with | [] -> ..."
+
 
 # F# file organization:
 
