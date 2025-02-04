@@ -31,7 +31,6 @@ let ``Extract segments from file content with indented lines`` () =
 [<Fact>]
 let ``Extract segments from file content with multi-line string`` () =
     let fileContent = "\nlet teststring = \"\"\"This is a multi-line string\nspanning multiple lines\"\"\"\n"
-    printf "*** Do we see any backslashes in %s" fileContent
     let expected = ["let teststring = \"\"\n"]
     let actual = extractSegments "filename.fs" fileContent
     Assert.Equal<List<string>>(expected, GetSegmentTexts actual)
