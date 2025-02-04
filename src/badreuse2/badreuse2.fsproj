@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <Compile Include="tokenize.fs" />
+    <Compile Include="segmentExtraction.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 

@@ -9,6 +9,8 @@
   <ItemGroup>
     <Compile Include="Tests.fs" />
     <Compile Include="TokenizeTests.fs" />
+    <Compile Include="SegmentExtractionTests.fs" />
+    <Compile Include="SegmentExtractionRemoveMultilineStringsTests.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 
