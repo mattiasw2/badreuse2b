@@ -6,8 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="tokenize.fs" />
     <Compile Include="SegmentInfo.fs" />
+    <Compile Include="tokenize.fs" />
     <Compile Include="segmentExtraction.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
