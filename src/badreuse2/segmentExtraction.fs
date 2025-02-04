@@ -5,6 +5,7 @@ open System.Text.RegularExpressions
 
 /// Replaces multi-line strings (enclosed in """) with empty strings ("").
 let removeMultilineStrings (content: string) : string =
+    // smart: matches the first `"""` and stops at the next `"""`, even if there are one or two double quotes in between.
     let pattern = "\"{3}([^\"]|\"{1,2})*?\"{3}"
     Regex.Replace(content, pattern, "\"\"", RegexOptions.Singleline)
 
